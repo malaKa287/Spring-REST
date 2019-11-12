@@ -50,7 +50,7 @@ public class MessageController {
 
     @GetMapping("/messages/{id}")
     public Message getMessage(@PathVariable long id, HttpServletResponse response, HttpServletRequest request) {
-        if (messageService.getMessage(id) == null){
+        if (messageService.getMessage(id) == null) {
             throw new DataNotFoundException("no such message");
         }
         Message message = messageService.getMessage(id);

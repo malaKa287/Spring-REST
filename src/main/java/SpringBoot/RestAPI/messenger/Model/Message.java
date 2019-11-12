@@ -6,13 +6,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Fetch;
 import org.springframework.hateoas.Link;
 //import org.springframework.hateoas.ResourceSupport;
 
+import javax.persistence.*;
 import java.beans.Transient;
 import java.time.LocalDate;
 import java.util.*;
 
+@Entity
 @Getter
 @Setter
 @ToString
@@ -21,10 +24,13 @@ import java.util.*;
 //public class Message extends ResourceSupport {
 public class Message {
 
+    @Id
+    @GeneratedValue
     private long id;
     private String message;
     private LocalDate date;
     private String author;
+    @OneToMany(fetch = FetchType.LAZY)
     private Map<Long, Comment> comments = new HashMap<>();
     private String content;
     private Link link;

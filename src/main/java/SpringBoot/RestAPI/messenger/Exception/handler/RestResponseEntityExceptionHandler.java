@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.persistence.EntityNotFoundException;
+
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -19,6 +21,13 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 //        return ResponseEntity.status(HttpStatus.NOT_FOUND)
 //                .body(bodyOfResponse);
+    }
+
+    @ExceptionHandler(value = EntityNotFoundException.class)
+    protected ResponseEntity<Object> entityNotFound(RuntimeException ex, WebRequest request) {
+        String bodyOfResponse = "entity not found exception";
+
+        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
     @ExceptionHandler(value = Exception.class)
